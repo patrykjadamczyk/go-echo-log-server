@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"time"
+	"github.com/gen2brain/beeep"
 )
 
 func requestLogger(targetMux http.Handler) http.Handler {
@@ -17,6 +18,8 @@ func requestLogger(targetMux http.Handler) http.Handler {
 		// log request by who(IP address)
 		requesterIP := r.RemoteAddr
 		fmt.Println(start, "Received Request", r.Method, r.RequestURI, requesterIP)
+		message := fmt.Sprintln(start, "Received Request", r.Method, r.RequestURI, requesterIP)
+		beeep.Notify("Go Echo Log Server", message, "")
 
 		log.Printf(
 			"%s\t\t%s\t\t%s\t\t%v",
