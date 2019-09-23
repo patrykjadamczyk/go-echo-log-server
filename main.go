@@ -17,8 +17,8 @@ func requestLogger(targetMux http.Handler) http.Handler {
 
 		// log request by who(IP address)
 		requesterIP := r.RemoteAddr
-		fmt.Println(start, "Received Request", r.Method, r.RequestURI, requesterIP)
-		message := fmt.Sprintln(start, "Received Request", r.Method, r.RequestURI, requesterIP)
+		message := fmt.Sprintln(start, "Received Request", r.Method, r.RequestURI, requesterIP) + fmt.Sprintln(r.Body)
+		fmt.Println(message)
 		beeep.Notify("Go Echo Log Server", message, "")
 
 		log.Printf(
