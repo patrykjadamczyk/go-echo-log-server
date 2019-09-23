@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 	"os"
 	"time"
+	"io/ioutil"
 	"github.com/gen2brain/beeep"
 )
 
@@ -14,24 +17,17 @@ func requestLogger(targetMux http.Handler) http.Handler {
 		start := time.Now()
 
 		targetMux.ServeHTTP(w, r)
-
-		// log request by who(IP address)
-		requesterIP := r.RemoteAddr
-		message := fmt.Sprintln(start, "Received Request", r.Method, r.RequestURI, requesterIP) + fmt.Sprintln(r.Body)
+        requestDump, err := httputil.DumpRequest(r, false)
+        if err != nil {
+          fmt.Println(err)
+        }
+        bodyBuffer, _ := ioutil.ReadAll(r.Body)
+        body, _ := url.QueryUnescape(string(bodyBuffer))
+        
+        message := fmt.Sprintln(start) + fmt.Sprintln(string(requestDump)) + fmt.Sprintln(body)
 		fmt.Println(message)
 		beeep.Notify("Go Echo Log Server", message, "")
-
-		log.Printf(
-			"%s\t\t%s\t\t%s\t\t%v",
-			r.Method,
-			r.RequestURI,
-			requesterIP,
-			time.Since(start),
-		)
-		log.Printf(
-		    "DATA: %s",
-		    r.Body,
-		)
+		log.Printf(message)
 	})
 }
 
