@@ -5,3 +5,7 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[[constraint]]
+  name = "github.com/rakyll/statik"
+  version = "0.1.6"

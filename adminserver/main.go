@@ -8,8 +8,10 @@ import (
 	"os"
 	"time"
 
+	_ "github.com/patrykjadamczyk/go-echo-log-server/adminserver/statik"
 	"github.com/patrykjadamczyk/go-echo-log-server/config"
 	"github.com/patrykjadamczyk/go-echo-log-server/logdb"
+	"github.com/rakyll/statik/fs"
 )
 
 func banner(appConfiguration config.Configuration) {
@@ -29,7 +31,6 @@ func requestLogger(targetMux http.Handler) http.Handler {
 func dataRoute(appDatabase logdb.DB) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		_ = appDatabase.View(func(tx *logdb.Tx) error {
-			fmt.Println(tx.GetAll())
 			html, errJson := json.Marshal(tx.GetAll())
 			if errJson != nil {
 				w.WriteHeader(http.StatusInternalServerError)
@@ -38,7 +39,8 @@ func dataRoute(appDatabase logdb.DB) func(w http.ResponseWriter, r *http.Request
 				return errJson
 			}
 			w.Header().Set("Content-Type", "application/json; charset=utf-8")
-			w.WriteHeader(http.StatusAccepted)
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.WriteHeader(http.StatusOK)
 			_, err := w.Write(html)
 			if err != nil {
 				fmt.Println(err)
@@ -47,17 +49,6 @@ func dataRoute(appDatabase logdb.DB) func(w http.ResponseWriter, r *http.Request
 			}
 			return nil
 		})
-	}
-}
-
-func indexRoute(w http.ResponseWriter, r *http.Request) {
-	html := getIndex()
-	w.WriteHeader(http.StatusAccepted)
-	_, err := w.Write([]byte(html))
-	if err != nil {
-		fmt.Println(err)
-		log.Println(err)
-		return
 	}
 }
 
@@ -71,16 +62,22 @@ func Main(appConfiguration config.Configuration, appDatabase logdb.DB) {
 	logFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 
 	if err != nil {
+		log.Println("ERROR", err)
 		panic(err)
 	}
 
 	defer logFile.Close()
-
 	// direct all log messages to log file
 	log.SetOutput(logFile)
 
+	staticFS, errStaticFS := fs.New()
+	if errStaticFS != nil {
+		log.Println("ERROR", errStaticFS)
+		panic(err)
+	}
+
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", indexRoute)
+	mux.Handle("/", http.StripPrefix("/", http.FileServer(staticFS)))
 	mux.HandleFunc("/_data/", dataRoute(appDatabase))
 
 	fmt.Println("Starting Go Logging Admin Server on port", port)

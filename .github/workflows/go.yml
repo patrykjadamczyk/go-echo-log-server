@@ -19,6 +19,7 @@ jobs:
     - name: Get dependencies
       run: |
         go get github.com/gen2brain/beeep
+        go get github.com/rakyll/statik
         go get github.com/patrykjadamczyk/go-echo-log-server
 
     - name: Build
@@ -46,6 +47,7 @@ jobs:
     - name: Get dependencies
       run: |
         go get github.com/gen2brain/beeep
+        go get github.com/rakyll/statik
         go get github.com/patrykjadamczyk/go-echo-log-server
 
     - name: Build

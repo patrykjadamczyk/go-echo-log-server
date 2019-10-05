@@ -42,6 +42,17 @@
   revision = "179d4d0c4d8d407a32af483c2354df1d2c91e6c3"
 
 [[projects]]
+  digest = "1:d8fbf21e90011dbdec89e8199db0ffc9ccf2f2aad5ca817e5143fb9bf4f7f243"
+  name = "github.com/rakyll/statik"
+  packages = [
+    ".",
+    "fs",
+  ]
+  pruneopts = "UT"
+  revision = "3bac566d30cdbeddef402a80f3d6305860e59f12"
+  version = "v0.1.6"
+
+[[projects]]
   branch = "master"
   digest = "1:a5dd1331ce858f7648dbe0cddc1e05ea7b70dd6cb8e8a3043a5d2eb0d66ab63a"
   name = "github.com/tadvi/systray"
@@ -74,6 +85,8 @@
   input-imports = [
     "github.com/gen2brain/beeep",
     "github.com/nu7hatch/gouuid",
+    "github.com/rakyll/statik",
+    "github.com/rakyll/statik/fs",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

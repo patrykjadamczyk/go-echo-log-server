@@ -1,6 +1,6 @@
 {
-  "name": "adminpanel",
-  "short_name": "adminpanel",
+  "name": "Go Echo Log Server",
+  "short_name": "gels",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
