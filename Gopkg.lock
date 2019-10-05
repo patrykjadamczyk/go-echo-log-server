@@ -19,6 +19,22 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:f14d1b50e0075fb00177f12a96dd7addf93d1e2883c25befd17285b779549795"
+  name = "github.com/gopherjs/gopherjs"
+  packages = ["js"]
+  pruneopts = "UT"
+  revision = "d3ddacdb130fcd23f77a827e3b599804730be6b5"
+
+[[projects]]
+  digest = "1:94f6a77a051b8e2c6e8c280ce298dcd1028ed345f2209e630cdc606d59767f97"
+  name = "github.com/gopherjs/gopherwasm"
+  packages = ["js"]
+  pruneopts = "UT"
+  revision = "f5a54963d451109f20622db5b6a055569ec6b4c6"
+  version = "v1.1.0"
+
+[[projects]]
+  branch = "master"
   digest = "1:0e1e5f960c58fdc677212fcc70e55042a0084d367623e51afbdb568963832f5d"
   name = "github.com/nu7hatch/gouuid"
   packages = ["."]
@@ -55,6 +71,9 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/gen2brain/beeep"]
+  input-imports = [
+    "github.com/gen2brain/beeep",
+    "github.com/nu7hatch/gouuid",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
