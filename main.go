@@ -34,6 +34,7 @@ func requestLogger(targetMux http.Handler) http.Handler {
 
 func logRoute(w http.ResponseWriter, r *http.Request) {
 	html := ""
+	w.WriteHeader(http.StatusAccepted)
 	_, _ = w.Write([]byte(html))
 }
 
