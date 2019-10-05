@@ -12,6 +12,7 @@
 *.out
 # IDEA
 .idea
+*.iml
 go-echo-log-server.iml
 go-echo-log-server.ipr
 go-echo-log-server.iws
