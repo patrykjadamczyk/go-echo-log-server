@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"os"
 	"time"
-	"io/ioutil"
+
 	"github.com/gen2brain/beeep"
 )
 
@@ -17,30 +18,29 @@ func requestLogger(targetMux http.Handler) http.Handler {
 		start := time.Now()
 
 		targetMux.ServeHTTP(w, r)
-        requestDump, err := httputil.DumpRequest(r, false)
-        if err != nil {
-          fmt.Println(err)
-        }
-        bodyBuffer, _ := ioutil.ReadAll(r.Body)
-        body, _ := url.QueryUnescape(string(bodyBuffer))
-        
-        message := fmt.Sprintln(start) + fmt.Sprintln(string(requestDump)) + fmt.Sprintln(body)
+		requestDump, err := httputil.DumpRequest(r, false)
+		if err != nil {
+			fmt.Println(err)
+		}
+		bodyBuffer, _ := ioutil.ReadAll(r.Body)
+		body, _ := url.QueryUnescape(string(bodyBuffer))
+
+		message := fmt.Sprintln(start) + fmt.Sprintln(string(requestDump)) + fmt.Sprintln(body)
 		fmt.Println(message)
-		beeep.Notify("Go Echo Log Server", message, "")
+		_ = beeep.Notify("Go Echo Log Server", message, "")
 		log.Printf(message)
 	})
 }
 
 func logRoute(w http.ResponseWriter, r *http.Request) {
 	html := ""
-	w.Write([]byte(html))
+	_, _ = w.Write([]byte(html))
 }
 
 func main() {
 	fileName := "webrequests.log"
 
 	fmt.Println("Making log file ready", "Logfile: ", fileName)
-	// https://www.socketloop.com/tutorials/golang-how-to-save-log-messages-to-file
 	logFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 
 	if err != nil {
@@ -56,5 +56,5 @@ func main() {
 	mux.HandleFunc("/", logRoute)
 
 	fmt.Println("Starting Go Logging Server on port 7777")
-	http.ListenAndServe(":7777", requestLogger(mux))
+	_ = http.ListenAndServe(":7777", requestLogger(mux))
 }
