@@ -104,5 +104,9 @@ func Main(appConfiguration config.Configuration, appDatabase logdb.DB) {
 	mux.HandleFunc("/", logRoute)
 
 	fmt.Println("Starting Go Logging Server on port", port)
-	_ = http.ListenAndServe(fmt.Sprintf(":%s", port), requestLogger(mux, appDatabase))
+	errServer := http.ListenAndServe(fmt.Sprintf(":%s", port), requestLogger(mux, appDatabase))
+	if errServer != nil {
+		fmt.Println(errServer)
+		log.Println("ERROR", errServer)
+	}
 }

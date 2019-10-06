@@ -81,5 +81,9 @@ func Main(appConfiguration config.Configuration, appDatabase logdb.DB) {
 	mux.HandleFunc("/_data/", dataRoute(appDatabase))
 
 	fmt.Println("Starting Go Logging Admin Server on port", port)
-	_ = http.ListenAndServe(fmt.Sprintf(":%s", port), requestLogger(mux))
+	errServer := http.ListenAndServe(fmt.Sprintf(":%s", port), requestLogger(mux))
+	if errServer != nil {
+		fmt.Println(errServer)
+		log.Println("ERROR", errServer)
+	}
 }
