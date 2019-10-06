@@ -6,14 +6,6 @@ import moment from 'moment';
 import 'semantic-ui-button/button.css';
 import {GOLANG_TIMEFORMAT} from '../../components/log/RelativeDateTime';
 
-const objectMap = (object, mapFn) => {
-	return Object.keys(object).reduce((result, key) => {
-		const newResult = result;
-		newResult[key] = mapFn(object[key], key, object);
-		return newResult;
-	}, {});
-};
-
 export default class Home extends Component {
 	componentDidMount() {
 		const { interval } = this.state;
@@ -28,12 +20,10 @@ export default class Home extends Component {
 	}
 
 	initData = () => {
-		let url;
+		let url = '/_data/';
 		if (process.env.NODE_ENV === 'development') {
 			const BASE_URL = 'http://127.0.0.1:7778';
 			url = `${BASE_URL}/_data/`;
-		} else {
-			url = '/_data/';
 		}
 		axios.get(url)
 			.then(response => response.data)
@@ -53,7 +43,7 @@ export default class Home extends Component {
 	};
 
 	sortItems(requests) {
-		const getDate = date => moment(date, GOLANG_TIMEFORMAT, false)
+		const getDate = date => moment(date, GOLANG_TIMEFORMAT, false);
 		const sortedKeys = Object
 			.keys(requests)
 			.sort((a,b) => {

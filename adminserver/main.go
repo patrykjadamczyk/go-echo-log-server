@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	_ "github.com/patrykjadamczyk/go-echo-log-server/adminserver/statik"
+	_ "github.com/patrykjadamczyk/go-echo-log-server/adminserver/adminpanel/statik"
 	"github.com/patrykjadamczyk/go-echo-log-server/config"
 	"github.com/patrykjadamczyk/go-echo-log-server/logdb"
 	"github.com/rakyll/statik/fs"
