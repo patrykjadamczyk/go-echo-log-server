@@ -1,6 +1,9 @@
 package config
 
-import "os"
+import (
+	"os"
+	"strings"
+)
 
 type ServerConfiguration struct {
 	// Port of the server
@@ -52,17 +55,17 @@ func FillConfigWithEnvironmentVars() Configuration {
 	gelsAdminServerLogfile, gelsAdminServerLogfileExist := os.LookupEnv("GELS_ADMIN_SERVER_LOGFILE")
 	// Log Server Environment Variables Setup
 	if gelsLogServerPortExist {
-		newConfig.LogServer.Port = gelsLogServerPort
+		newConfig.LogServer.Port = strings.TrimSpace(gelsLogServerPort)
 	}
 	if gelsLogServerLogfileExist {
-		newConfig.LogServer.LogFile = gelsLogServerLogfile
+		newConfig.LogServer.LogFile = strings.TrimSpace(gelsLogServerLogfile)
 	}
 	// Admin Server Environment Variables Setup
 	if gelsAdminServerPortExist {
-		newConfig.AdminServer.Port = gelsAdminServerPort
+		newConfig.AdminServer.Port = strings.TrimSpace(gelsAdminServerPort)
 	}
 	if gelsAdminServerLogfileExist {
-		newConfig.AdminServer.LogFile = gelsAdminServerLogfile
+		newConfig.AdminServer.LogFile = strings.TrimSpace(gelsAdminServerLogfile)
 	}
 	// Return Changed Config
 	return newConfig
