@@ -8,11 +8,29 @@ function log(base_url, trace = false, variable = {}) {
                 _trace: err.stack,
             };
         }
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', `${base_url}/logger`);
-        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        xhr.send(JSON.stringify(data));
-        xhr.onload = resolve;
-        xhr.onerror = reject;
+        data = JSON.stringify(data);
+        const url = `${base_url}/logger`;
+        let xhr;
+        try {
+            xhr = new XMLHttpRequest();
+            xhr.open('POST', url);
+            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xhr.send(data);
+            xhr.onload = resolve;
+            xhr.onerror = reject;
+        } catch (e) {
+            const http = require('http');
+            const req = http.request(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+            }, (res) => {
+                res.on('end', resolve);
+            });
+            req.on('error', reject);
+            req.write(data);
+            req.end();
+        }
     });
 }
