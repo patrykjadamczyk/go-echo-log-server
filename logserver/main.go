@@ -74,6 +74,7 @@ func requestLogger(targetMux http.Handler, appDatabase logdb.DB) http.Handler {
 
 func logRoute(w http.ResponseWriter, r *http.Request) {
 	html := ""
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusAccepted)
 	_, err := w.Write([]byte(html))
 	if err != nil {
