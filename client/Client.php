@@ -15,8 +15,6 @@ function log($url, $trace=false, $data=[]) {
     @curl_setopt($s, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($s, CURLOPT_POST, true);
     curl_setopt($s, CURLOPT_POSTFIELDS, http_build_query($realObj));
-    curl_setopt($s, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
-    curl_setopt($s, CURLOPT_REFERER, 'http://www.google.com');
     curl_exec($s);
     curl_close($s);
 }
