@@ -42,15 +42,15 @@
   revision = "179d4d0c4d8d407a32af483c2354df1d2c91e6c3"
 
 [[projects]]
-  digest = "1:d8fbf21e90011dbdec89e8199db0ffc9ccf2f2aad5ca817e5143fb9bf4f7f243"
+  digest = "1:8c5d5c3702c7b0416974a11297a22300fc54443b6b9edae263d5fc556c96373e"
   name = "github.com/rakyll/statik"
   packages = [
     ".",
     "fs",
   ]
   pruneopts = "UT"
-  revision = "3bac566d30cdbeddef402a80f3d6305860e59f12"
-  version = "v0.1.6"
+  revision = "46bd79c4540341fe472fe71dd2ce0ccd4e635450"
+  version = "v0.1.7"
 
 [[projects]]
   branch = "master"
