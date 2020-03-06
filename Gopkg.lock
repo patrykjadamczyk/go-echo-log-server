@@ -3,11 +3,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:20986c292109ea4f0ba1aa179459beb09e8e04607ec31d112058eb83c30338cf"
+  digest = "1:f9ec28229d102cec047fe50088a30845b326bc09bd812f3d5f6166d5e7dd0246"
   name = "github.com/gen2brain/beeep"
   packages = ["."]
   pruneopts = "UT"
-  revision = "1f001e98c9e193f0cbd7e4020fe0bb094ebccc67"
+  revision = "ff0f4a39397e723435fb480420cfaf2bf3d1f835"
 
 [[projects]]
   digest = "1:1f9fae0d86e56888d2e00c231d2a3958c321856ae585cff461b64929c66ce595"
