@@ -1,20 +1,7 @@
 import {Component, h} from 'preact';
+import {parse} from 'query-string';
 import 'semantic-ui-table/table.css';
 import RelativeDateTime from './RelativeDateTime';
-
-function parseQuery(queryString) {
-    const queryRegex = new RegExp(/\??[^&"'=]+=[^&"'=]+&*/);
-    if (!queryRegex.test(queryString)) {
-        throw new Error("Not a query string");
-    }
-    const query = {};
-    const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
-    for (let i = 0; i < pairs.length; i++) {
-        const pair = pairs[i].split('=');
-        query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
-    }
-    return query;
-}
 
 export default class Log extends Component {
     render({ identifier, data }) {
@@ -34,7 +21,7 @@ export default class Log extends Component {
             formattedDataObj = JSON.stringify(JSON.parse(dataObj), undefined, 4);
         } catch (e) {
             try {
-                formattedDataObj = JSON.stringify(parseQuery(dataObj), undefined, 4);
+                formattedDataObj = JSON.stringify(parse(dataObj), undefined, 4);
             } catch (f) {}
         }
 
