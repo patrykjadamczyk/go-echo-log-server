@@ -1,0 +1,14 @@
+{
+    "commands": {
+        "start-win": {
+            "mode": "mc",
+            "commands": [
+                "cd adminserver/adminpanel & npm run go-build",
+                "cd ../..",
+                "del go-echo-log-server.exe",
+                "go build",
+                "go-echo-log-server.exe"
+            ]
+        }
+    }
+}
