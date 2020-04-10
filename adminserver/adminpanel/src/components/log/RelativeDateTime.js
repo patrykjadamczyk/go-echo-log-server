@@ -1,8 +1,9 @@
 import {Component, h} from 'preact';
 import 'semantic-ui-table/table.css';
 import moment from 'moment';
+import * as tz from "moment-timezone";
 
-export const GOLANG_TIMEFORMAT = 'YYYY-MM-DD HH:mm:ss.SSSSSSS zz';
+export const GOLANG_TIMEFORMAT = 'YYYY-MM-DD HH:mm:ss.SSSSSSS';
 
 export default class Log extends Component {
     refresh = () => {
@@ -24,7 +25,8 @@ export default class Log extends Component {
     }
 
     render({ time }) {
-        return moment(time, GOLANG_TIMEFORMAT, false)
+        return moment.utc(time, GOLANG_TIMEFORMAT, false)
+            .tz(moment.tz.guess(true))
             .fromNow();
     }
 }

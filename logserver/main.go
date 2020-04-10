@@ -26,7 +26,7 @@ func requestLogger(targetMux http.Handler, appDatabase logdb.DB) http.Handler {
 	// Handle Requests
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Get Time when Request Arrived
-		start := time.Now()
+		start := time.Now().UTC()
 		// Make Request Identifier
 		requestIdentifier, errUUID := uuid.NewV4()
 		if errUUID != nil {
