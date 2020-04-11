@@ -16,7 +16,7 @@ type AppInfo struct {
 	// Version of App
 	Version string
 	// Version Array of App
-	VersionArray [4]int
+	VersionArray [3]int
 }
 
 type Configuration struct {
@@ -39,8 +39,8 @@ func FillConfigWithDefaults() Configuration {
 			LogFile: "error_admin.log",
 		},
 		App: AppInfo{
-			Version:      "0.1.0.0",
-			VersionArray: [4]int{0, 1, 0, 0},
+			Version:      "1.0.0",
+			VersionArray: [3]int{1, 0, 0},
 		},
 	}
 }
