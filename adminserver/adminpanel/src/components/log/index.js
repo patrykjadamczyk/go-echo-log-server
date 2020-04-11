@@ -4,6 +4,18 @@ import 'semantic-ui-table/table.css';
 import RelativeDateTime from './RelativeDateTime';
 
 export default class Log extends Component {
+    checkIsXML(data) {
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(data, "text/xml");
+        return dom.documentElement.nodeName !== "parsererror";
+    }
+
+    checkIsHTML(data) {
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(data, "text/html");
+        return dom.documentElement.nodeName !== "parsererror";
+    }
+
     render({ identifier, data }) {
         const {
             Start: start,
@@ -17,12 +29,15 @@ export default class Log extends Component {
         } catch (e) {}
 
         let formattedDataObj = dataObj;
-        try {
-            formattedDataObj = JSON.stringify(JSON.parse(dataObj), undefined, 4);
-        } catch (e) {
+        if (!this.checkIsXML(dataObj) && !this.checkIsHTML(dataObj)) {
             try {
-                formattedDataObj = JSON.stringify(parse(dataObj), undefined, 4);
-            } catch (f) {}
+                formattedDataObj = JSON.stringify(JSON.parse(dataObj), undefined, 4);
+            } catch (e) {
+                try {
+                    formattedDataObj = JSON.stringify(parse(dataObj), undefined, 4);
+                } catch (f) {
+                }
+            }
         }
 
         return (
